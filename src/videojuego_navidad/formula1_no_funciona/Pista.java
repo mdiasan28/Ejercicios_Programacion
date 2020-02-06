@@ -1,4 +1,4 @@
-package videojuego_navidad.formula1;
+package videojuego_navidad.formula1_no_funciona;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import examen_oficial.Utils;
-import videojuegos.arkanoid.Pantalla;
 
 public class Pista {
 	public static final int WIDTH = 800;
@@ -48,7 +47,7 @@ public class Pista {
 			}
 		}
 	}
-	public static void main(String[] args) {
-		 Pantalla inv = new  Pantalla();
-	}
+//	public static void main(String[] args) {
+//		 Pantalla inv = new  Pantalla();
+//	}
 }

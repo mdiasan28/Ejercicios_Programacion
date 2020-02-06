@@ -15,6 +15,10 @@ public class Plato {
 		this.precio = precio;
 	}
 
+	public Plato() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @return the nombre
 	 */

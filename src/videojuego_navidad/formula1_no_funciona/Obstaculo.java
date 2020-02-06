@@ -1,4 +1,4 @@
-package videojuego_navidad.formula1;
+package videojuego_navidad.formula1_no_funciona;
 
 public class Obstaculo {
 
