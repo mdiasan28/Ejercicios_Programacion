@@ -1,6 +1,6 @@
 package ejerciciosTema6;
 
-public class Ejercicios {
+public class Ejercicios_Math {
 
 	public static void main(String[] args) {
 //		ej2();

@@ -1,9 +1,13 @@
 package ejerciciosTema6;
 
+import javax.swing.JOptionPane;
+
 public class Ejercicios_Wrappers {
 
 	public static void main(String[] args) {
-		ej1();
+//		ej1();
+//		ej2();
+		ej3();
 
 	}
 
@@ -40,6 +44,47 @@ public class Ejercicios_Wrappers {
 		System.out.println("Tamaño en bits complemento a 2 para Double: " + Double.SIZE);
 	}
 
+	public static void ej2(){
+		boolean mayuscula= false;
+		boolean minuscula = false;
+		boolean alfanumerico = false;
+		boolean digito = false;
+		
+		int indice=0;
+		boolean hecho=false;
+		do {
+			String contraseña = (String) JOptionPane.showInputDialog("Introduce una contraseña");
+			for ( indice = 0; indice < contraseña.length(); indice++) {
+				char str = contraseña.charAt(indice);
+				if (Character.isLowerCase(str)) {
+					minuscula=true;
+				}
+				if (Character.isUpperCase(str)) {
+					mayuscula=true;
+				}
+				if (Character.isAlphabetic(str)) {
+					alfanumerico = true;
+				}
+				if (Character.isDigit(str)) {
+					digito = true;
+				}
+			}
+			if (minuscula==true && mayuscula==true && digito==true && alfanumerico==true) {
+				hecho=true;
+				System.out.println("Contraseña introducida correctamente");
+			}
+			else {
+				System.out.println("Contraseña introducida incorrectamente intentalo de nuevo");
+			}
+		} while (!hecho);
+		
+	}
+	
+	public static void ej3() {
+		for (int i = 1; i < 100; i++) {
+			System.out.println("El número " + i + " en base 16 " + Integer.toHexString(i));
+		}
+	}
 
 }
 
