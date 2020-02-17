@@ -6,7 +6,7 @@ public class Ejercicio01Bloque02 {
 
 	public static void main(String[] args) {
 		
-		String str = JOptionPane.showInputDialog("Introduce un número");
+		String str = JOptionPane.showInputDialog("Introduce un numero");
 		int num1= Integer.parseInt(str);
 		
 		int acnegativo = 0;  //<0

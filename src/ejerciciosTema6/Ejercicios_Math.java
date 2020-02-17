@@ -49,7 +49,7 @@ public class Ejercicios_Math {
 	}
 	
 	public static void ej5() {
-		//La y es el punto medio, el resto son puntos menores de la funcion puestp que y es el máximo
+		//La y es el punto medio, el resto son puntos menores de la funcion puesto que y es el máximo
 		double x=0;
 		double y=0;
 		double y2 =2;

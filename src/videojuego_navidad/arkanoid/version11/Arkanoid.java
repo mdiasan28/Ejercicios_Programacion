@@ -121,12 +121,14 @@ public class Arkanoid extends Canvas{
 	}
 
 	public void paintWorld() {
+		String background = Propiedades.getProperty("BACKGROUND");
 		// Resuelve un problema de sincronización de memoria de vídeo en Linux
 		Toolkit.getDefaultToolkit().sync();
 		// Obtengo el objeto gráfico que me permita pintar en el doble búffer
 		Graphics2D g = (Graphics2D)strategy.getDrawGraphics();
+		g.getColor();
 		// Pinto un rectángulo negro que ocupe toda la escena
-		g.setColor(Color.black);
+		Color.decode(background);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		// Para cada actor del juego, le pido que se pinte a sí mismo
 		for (Actor actor : this.actors) {
