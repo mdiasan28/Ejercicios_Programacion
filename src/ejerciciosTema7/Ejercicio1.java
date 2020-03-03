@@ -64,7 +64,7 @@ public class Ejercicio1 {
 				opt= Integer.parseInt(sc.nextLine());
 				switch (opt) {
 				case 0:{
-					imprimirMenu();
+					generarMenu(conexion);
 					}
 				}
 				// Cierre de los elementos
