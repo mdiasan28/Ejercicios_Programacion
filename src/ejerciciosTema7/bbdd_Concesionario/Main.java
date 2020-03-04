@@ -1,16 +1,19 @@
 package ejerciciosTema7.bbdd_Concesionario;
 
+import java.text.ParseException;
+
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		menuPrincipal();
 	}
 
 
 	/**
+	 * @throws ParseException 
 	 * 
 	 */
-	private static void menuPrincipal() {
+	private static void menuPrincipal() throws ParseException {
 
 		int opcionElegida;
 		do {

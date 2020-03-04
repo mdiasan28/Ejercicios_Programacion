@@ -10,7 +10,7 @@ public class Cliente {
 	String localidad;
 	String dniNie;
 	Date fechaNac;
-	boolean activo;
+	boolean activo= true;
 	
 
 	public Cliente() {

@@ -145,7 +145,7 @@ public class GestionFabricante {
 	 * @return
 	 * @throws ErrorBBDDException
 	 */
-	private static Fabricante seleccionPorUsuario () throws ErrorBBDDException {
+	public static Fabricante seleccionPorUsuario () throws ErrorBBDDException {
 		Fabricante fab = null;
 		int id = -2;
 		do {

@@ -145,7 +145,7 @@ public class GestionConcesionario {
 	 * @return
 	 * @throws ErrorBBDDException
 	 */
-	private static Concesionario seleccionPorUsuario () throws ErrorBBDDException {
+	public static Concesionario seleccionPorUsuario () throws ErrorBBDDException {
 		Concesionario conc = null;
 		int id = -2;
 		do {

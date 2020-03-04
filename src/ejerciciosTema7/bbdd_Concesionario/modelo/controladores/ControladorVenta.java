@@ -9,14 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ejerciciosTema7.bbdd_Concesionario.modelo.Cliente;
+import ejerciciosTema7.bbdd_Concesionario.modelo.Coche;
 import ejerciciosTema7.bbdd_Concesionario.modelo.Concesionario;
+import ejerciciosTema7.bbdd_Concesionario.modelo.Venta;
 
-public class ControladorCliente extends ControladorBBDD {
+public class ControladorVenta extends ControladorBBDD {
 
 	
 	
-	public static List<Cliente> getAll () throws ErrorBBDDException {
-		List<Cliente> Clientes = new ArrayList<Cliente> ();
+	public static List<Venta> getAll () throws ErrorBBDDException {
+		List<Venta> Ventas = new ArrayList<Venta> ();
 				
 		Connection conn = null;
 
@@ -24,18 +26,17 @@ public class ControladorCliente extends ControladorBBDD {
 			conn = ConnectionManagerV2.getConexion();
 			
 			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery("Select * from cliente");
+			ResultSet rs = s.executeQuery("Select * from venta");
 
 			while (rs.next()) {
-				Cliente client = new Cliente();
-				client.setId(rs.getInt("id"));
-				client.setNombre(rs.getString("nombre"));
-				client.setApellidos(rs.getString("apellidos"));
-				client.setLocalidad(rs.getString("localidad"));
-				client.setDniNie(rs.getString("dniNie"));
-				client.setFechaNac(rs.getDate("fechaNac"));
-				client.setActivo(rs.getBoolean("activo"));
-				Clientes.add(client);
+				Venta v = new Venta();
+				v.setId(rs.getInt("id"));
+				v.setIdcliente(rs.getInt("idcliente"));
+				v.setIdconcesionario(rs.getInt("idconcesionario"));
+				v.setIdcoche(rs.getInt("idcoche"));
+				v.setFecha(rs.getDate("fecha"));
+				v.setPrecioventa(rs.getFloat("precioventa"));
+				Ventas.add(v);
 			}
 			
 			s.close();
@@ -43,7 +44,7 @@ public class ControladorCliente extends ControladorBBDD {
 		} catch (SQLException | ImposibleConectarException e) {			
 			throw new ErrorBBDDException(e);
 		} 
-		return Clientes;
+		return Ventas;
 	}
 	
 	
@@ -54,12 +55,12 @@ public class ControladorCliente extends ControladorBBDD {
 	 * @param actors
 	 * @throws ErrorBBDDException
 	 */
-	public static void almacenar (Cliente cliente) throws ErrorBBDDException {
-		if (get(cliente.getId()) != null) { // Solo modificar
-			almacenarModificado(cliente);
+	public static void almacenar (Venta venta) throws ErrorBBDDException {
+		if (get(venta.getId()) != null) { // Solo modificar
+			almacenarModificado(venta);
 		}
 		else { // Crear nuevo objeto en la BBDD
-			almacenarNuevo(cliente);
+			almacenarNuevo(venta);
 		}
 	}
 	
@@ -71,32 +72,31 @@ public class ControladorCliente extends ControladorBBDD {
 	 * @return
 	 * @throws ErrorBBDDException
 	 */
-	public static Cliente get (int id) throws ErrorBBDDException {
+	public static Venta get (int id) throws ErrorBBDDException {
 		Connection conn = null;
-		Cliente client = null;
+		Venta v = null;
 
 		try {
 			conn = ConnectionManagerV2.getConexion();
 			
 			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery("Select * from cliente where id = " + id);
+			ResultSet rs = s.executeQuery("Select * from venta where id = " + id);
 
 			if (rs.next()) {
-				client = new Cliente();
-				client.setId(id);
-				client.setNombre(rs.getString("nombre"));
-				client.setApellidos(rs.getString("apellidos"));
-				client.setLocalidad(rs.getString("localidad"));
-				client.setDniNie(rs.getString("dniNie"));
-				client.setFechaNac(rs.getDate("fechaNac"));
-				client.setActivo(rs.getBoolean("activo"));
+				v = new Venta();
+				v.setId(id);
+				v.setIdcliente(rs.getInt("idfcliente"));
+				v.setIdconcesionario(rs.getInt("idconcesionario"));
+				v.setIdcoche(rs.getInt("idcoche"));
+				v.setFecha(rs.getDate("fecha"));
+				v.setPrecioventa(rs.getFloat("precioventa"));
 			}
 			s.close();
 			
 		} catch (SQLException | ImposibleConectarException e) {			
 			throw new ErrorBBDDException(e);
 		} 
-		return client;
+		return v;
 	}
 	
 	
@@ -107,7 +107,7 @@ public class ControladorCliente extends ControladorBBDD {
 	 * @param actors
 	 * @throws ErrorBBDDException
 	 */
-	private static void almacenarNuevo (Cliente cliente) throws ErrorBBDDException {
+	private static void almacenarNuevo (Venta venta) throws ErrorBBDDException {
 
 		Connection conn = null;
 
@@ -116,15 +116,15 @@ public class ControladorCliente extends ControladorBBDD {
 			
 			PreparedStatement ps = (PreparedStatement) conn.
 					prepareStatement(
-					"INSERT INTO cliente (id, nombre, apellidos, localidad,  dniNie, fechaNac) VALUES  (?, ?, ?, ?, ?, ?)");
+					"INSERT INTO venta (id, idcliente, idconcesionario, idcoche,  fecha, precioventa) VALUES  (?, ?, ?, ?, ?, ?)");
 			int registrosInsertados;
 			
-			ps.setInt(1, nextIdEnTabla(conn, "Cliente")); 
-			ps.setString(2, cliente.getNombre());
-			ps.setString(3, cliente.getApellidos());
-			ps.setString(4, cliente.getLocalidad());
-			ps.setString(5, cliente.getDniNie());
-			ps.setDate(6, cliente.getFechaNac());
+			ps.setInt(1, nextIdEnTabla(conn, "Venta"));
+			ps.setInt(2, venta.getIdcliente());
+			ps.setInt(3, venta.getIdconcesionario());
+			ps.setInt(4, venta.getIdcoche());
+			ps.setDate(5, venta.getFecha());
+			ps.setFloat(6, venta.getPrecioventa());
 
 			registrosInsertados = ps.executeUpdate();
 			if (registrosInsertados != 1) {
@@ -144,7 +144,7 @@ public class ControladorCliente extends ControladorBBDD {
 	 * @param actors
 	 * @throws ErrorBBDDException
 	 */
-	private static void almacenarModificado (Cliente cliente) throws ErrorBBDDException {
+	private static void almacenarModificado (Venta venta) throws ErrorBBDDException {
 
 		Connection conn = null;
 
@@ -153,14 +153,14 @@ public class ControladorCliente extends ControladorBBDD {
 			
 			PreparedStatement ps = (PreparedStatement) conn.
 					prepareStatement(
-					"update cliente set nombre = ?, apellidos = ?, localidad = ?, dniNie = ?, fechaNac= ? where id = ?");
+					"update venta set idcliente = ?, idconcesionario = ?, idcoche= ?, fecha= ?, precioventa= ? where id = ?");
 			int registrosInsertados;
 			
-			ps.setString(1, cliente.getNombre());
-			ps.setString(2, cliente.getApellidos());
-			ps.setString(3, cliente.getLocalidad());
-			ps.setString(4, cliente.getDniNie());
-			ps.setDate(5, cliente.getFechaNac());
+			ps.setInt(1, venta.getIdcliente());
+			ps.setInt(2, venta.getIdconcesionario());
+			ps.setInt(3, venta.getIdcoche());
+			ps.setDate(4, venta.getFecha());
+			ps.setFloat(5, venta.getPrecioventa());
 
 			registrosInsertados = ps.executeUpdate();
 			if (registrosInsertados != 1) {
@@ -181,7 +181,7 @@ public class ControladorCliente extends ControladorBBDD {
 	 * @param actors
 	 * @throws ErrorBBDDException
 	 */
-	public static void eliminar (Cliente client) throws ErrorBBDDException {
+	public static void eliminar (Venta venta) throws ErrorBBDDException {
 
 		Connection conn = null;
 
@@ -190,10 +190,10 @@ public class ControladorCliente extends ControladorBBDD {
 			
 			PreparedStatement ps = (PreparedStatement) conn.
 					prepareStatement(
-					"delete from cliente where id = ?");
+					"delete from venta where id = ?");
 			int registrosInsertados;
 			
-			ps.setInt(1, client.getId()); 
+			ps.setInt(1, venta.getId()); 
 
 			registrosInsertados = ps.executeUpdate();
 			if (registrosInsertados != 1) {
